@@ -61,7 +61,7 @@ class ClientRepository implements ClientRepositoryInterface
             case 'password':
                 return $record->password_client;
             case 'client_credentials':
-                return ! empty($record->secret);
+                return ! empty($record->secret) || ! $record->password_client;
             default:
                 return true;
         }
