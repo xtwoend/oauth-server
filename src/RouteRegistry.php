@@ -8,6 +8,7 @@ use League\OAuth2\Server\AuthorizationServer;
 use OAuthServer\Repositories\TokenRepository;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
+use OAuthServer\Exception\AuthenticationException;
 use League\OAuth2\Server\Exception\OAuthServerException;
 
 class RouteRegistry
@@ -45,9 +46,7 @@ class RouteRegistry
         } catch (OAuthServerException $e) {
             return $e->generateHttpResponse($response);
         } catch (\Exception $e) {
-            $body = $response->getBody();
-            $body->write($e->getMessage());
-            return $response->withStatus(500)->withBody($body);
+            throw new AuthenticationException("Unauthorize: {$e->getMessage()}");
         }
     }
 }

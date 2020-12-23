@@ -30,6 +30,8 @@ class ClientMiddleware implements MiddlewareInterface
             $request = $this->server->validateAuthenticatedRequest($request);
         } catch (OAuthServerException $exception) {
             throw new AuthenticationException("Unauthorize: {$exception->getMessage()}");
+        } catch (\Exception $exception){
+            throw new AuthenticationException("Unauthorize: {$exception->getMessage()}");
         }
 
         $dispatched = $request->getAttribute(\Hyperf\HttpServer\Router\Dispatched::class);

@@ -4,8 +4,8 @@ namespace OAuthServer\Exception;
 
 class AuthenticationException extends \Exception
 {
-    public function __construct($message = '', $code = 1003) 
+    public function __construct($message = '', $code = 401) 
     {
-        parent::__construct('Unauthorized', $code);
+        parent::__construct($message, $code);
     }
 }
