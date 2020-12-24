@@ -18,7 +18,7 @@ trait ValidateScopeTrait
      * @param  array  $scopes
      * @return void
      *
-     * @throws \Laravel\Passport\Exceptions\MissingScopeException
+     * @throws \OAuthServer\Exception\MissingScopeException
      */
     protected function validateScopes($tokenScopes, $scopes)
     {
