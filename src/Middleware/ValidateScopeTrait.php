@@ -15,36 +15,34 @@ trait ValidateScopeTrait
      * Validate token credentials.
      *
      * @param  $token
-     * @return void
-     *
-     * @throws \OAuthServer\Exception\AuthenticationException
-     */
-    protected function validateCredentials($token)
-    {   
-        if (! $token) {
-            throw new AuthenticationException;
-        }
-    }
-
-    /**
-     * Validate token credentials.
-     *
-     * @param  $token
      * @param  array  $scopes
      * @return void
      *
      * @throws \Laravel\Passport\Exceptions\MissingScopeException
      */
-    protected function validateScopes($token, $scopes)
+    protected function validateScopes($tokenScopes, $scopes)
     {
-        if (in_array('*', json_decode($token->scopes, true))) {
+        if (in_array('*', $tokenScopes, true)) {
             return;
         }
         
         foreach ($scopes as $scope) {
-            if (! $this->repository->can($token, $scope)) {
+            if (! $this->can($tokenScopes, $scope)) {
                 throw new MissingScopeException($scope);
             }
         }
+    }
+
+    protected function can($tokenScopes, $scope)
+    {
+        $scopes = [$scope];
+
+        foreach ($scopes as $scope) {
+            if (array_key_exists($scope, array_flip($tokenScopes))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -31,7 +31,8 @@ class ClientRepository implements ClientRepositoryInterface
             $record->name,
             $record->redirect,
             ! empty($record->secret),
-            $record->provider
+            $record->provider,
+            $record->project_id?? null
         );
     }
 
@@ -74,7 +75,7 @@ class ClientRepository implements ClientRepositoryInterface
                 : hash_equals($storedHash, $clientSecret);
     }
     
-    protected function findActive($clientIdentifier)
+    public function findActive($clientIdentifier)
     {
         return Db::connection(config('oauth.provider', 'default'))->table('oauth_clients')
             ->where('revoked', 0)

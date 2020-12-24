@@ -30,6 +30,13 @@ class ClientEntity implements ClientEntityInterface
      * @var string
      */
     public $provider;
+    
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public $projectId;
 
     /**
      * Create a new client instance.
@@ -41,7 +48,7 @@ class ClientEntity implements ClientEntityInterface
      * @param  string|null  $provider
      * @return void
      */
-    public function __construct($identifier, $name, $redirectUri, $isConfidential = false, $provider = null)
+    public function __construct($identifier, $name, $redirectUri, $isConfidential = false, $provider = null, $projectId = null)
     {
         $this->setIdentifier((string) $identifier);
 
@@ -49,6 +56,7 @@ class ClientEntity implements ClientEntityInterface
         $this->isConfidential = $isConfidential;
         $this->redirectUri = explode(',', $redirectUri);
         $this->provider = $provider;
+        $this->projectId = $projectId;
     }
 
     public function setName($name)

@@ -111,23 +111,4 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
 
         return [$token, $client];
     }
-
-    public function can($token, $scope)
-    {
-        $tokenScopes = \json_decode($token->scopes, true);
-
-        if (in_array('*', $tokenScopes)) {
-            return true;
-        }
-
-        $scopes = [$scope];
-
-        foreach ($scopes as $scope) {
-            if (array_key_exists($scope, array_flip($tokenScopes))) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }

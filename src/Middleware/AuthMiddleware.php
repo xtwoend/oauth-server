@@ -7,8 +7,8 @@ use League\OAuth2\Server\ResourceServer;
 use Psr\Http\Server\MiddlewareInterface;
 use OAuthServer\Repositories\UserRepository;
 use OAuthServer\Middleware\ValidateScopeTrait;
+use OAuthServer\Repositories\ClientRepository;
 use OAuthServer\Exception\AuthenticationException;
-use OAuthServer\Repositories\AccessTokenRepository;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as Handler;
 
@@ -22,7 +22,7 @@ class AuthMiddleware implements MiddlewareInterface
     protected $client;
     protected $user;
     
-    public function __construct(UserRepository $userRepository, AccessTokenRepository $repository, ResourceServer $server)
+    public function __construct(UserRepository $userRepository, ClientRepository $repository, ResourceServer $server)
     {
         $this->userRepository = $userRepository;
         $this->repository = $repository;
@@ -53,17 +53,22 @@ class AuthMiddleware implements MiddlewareInterface
 
     protected function validate($request, $scopes)
     {
-        [$token, $client] = $this->repository->getTokenAndClientByTokenId($request->getAttribute('oauth_access_token_id'));
+        $client = $this->repository->findActive($request->getAttribute('oauth_client_id'));
 
-        if(is_null($token->user_id))
+        if(is_null($client))
             throw new AuthenticationException("Unauthorize.");
 
-        $user = $this->userRepository->getUserByProviderUserId($token->user_id, $client->provider);
-        
+        $userId = $request->getAttribute('oauth_user_id');
+        if(is_null($userId))
+            throw new AuthenticationException("Unauthorize.");
+
+        $user = $this->userRepository->getUserByProviderUserId($userId, $client->provider);
+
         $this->client   = $client;
         $this->user     = $user;
 
-        $this->validateCredentials($token);
-        $this->validateScopes($token, $scopes);
+        $tokenScope = $request->getAttribute('oauth_scopes')?? [];
+
+        $this->validateScopes($tokenScope, $scopes);
     }
 }
