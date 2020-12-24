@@ -46,12 +46,15 @@ class ClientMiddleware implements MiddlewareInterface
 
     protected function validate($request, $scopes)
     {
-        [$token, $client] = $this->repository->getTokenAndClientByTokenId($request->getAttribute('oauth_access_token_id'));
+        $client = $this->repository->findActive($request->getAttribute('oauth_client_id'));
 
-        $this->client = $client;
+        if(is_null($client))
+            throw new AuthenticationException("Unauthorize.");
 
-        $this->validateCredentials($token);
+        $this->client   = $client;
 
-        $this->validateScopes($token, $scopes);
+        $tokenScope = $request->getAttribute('oauth_scopes')?? [];
+
+        $this->validateScopes($tokenScope, $scopes);
     }
 }
