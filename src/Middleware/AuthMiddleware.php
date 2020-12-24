@@ -59,10 +59,10 @@ class AuthMiddleware implements MiddlewareInterface
             throw new AuthenticationException("Unauthorize.");
 
         $userId = $request->getAttribute('oauth_user_id');
-        if(is_null($userId))
-            throw new AuthenticationException("Unauthorize.");
-
         $user = $this->userRepository->getUserByProviderUserId($userId, $client->provider);
+  
+        if(is_null($user))
+            throw new AuthenticationException("Unauthorize.");
 
         $this->client   = $client;
         $this->user     = $user;

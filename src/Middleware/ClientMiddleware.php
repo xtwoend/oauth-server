@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use League\OAuth2\Server\ResourceServer;
 use Psr\Http\Server\MiddlewareInterface;
 use OAuthServer\Middleware\ValidateScopeTrait;
-use OAuthServer\Repositories\AccessTokenRepository;
+use OAuthServer\Repositories\ClientRepository;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as Handler;
 
@@ -18,7 +18,7 @@ class ClientMiddleware implements MiddlewareInterface
     protected $server;
     protected $client;
 
-    public function __construct(AccessTokenRepository $repository, ResourceServer $server)
+    public function __construct(ClientRepository $repository, ResourceServer $server)
     {
         $this->repository = $repository;
         $this->server = $server;
