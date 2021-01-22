@@ -10,8 +10,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "hyperf/database": "^2.0",
-        "hyperf/db-connection": "^2.0",
+        "hyperf/database": "^2.1",
+        "hyperf/db-connection": "^2.1",
         "league/oauth2-server": "^8.2",
         "phpseclib/phpseclib": "^3.0"
     },
