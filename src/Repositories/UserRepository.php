@@ -31,10 +31,10 @@ class UserRepository implements UserRepositoryInterface
         if (is_null($config = config('databases.'.$provider, null))) {
             throw new RuntimeException('Unable to determine authentication model from configuration.');
         }
-
-        $db = Db::connection($provider);
-
-        $user = $db->table('users')->where(config('oauth.find_by', 'email'), $username)->first();
+        
+        $query = Db::connection($provider);
+        
+        $user = $query->table('users')->where(config('oauth.find_by', 'email'), $username)->first();
 
         if (! $user) {
             return;
@@ -52,16 +52,16 @@ class UserRepository implements UserRepositoryInterface
         # code...
     }
 
-    public function getUserByProviderUserId($id, $provider = null)
+    public function getUserByProviderUserId($id, $client)
     {
+        $provider = $client->provider;
+       
         if(is_null($provider))
             $provider = config('oauth.provider');
 
-        $db = Db::connection($provider);
-        $user = $db->table('users')->find($id);
-
+        $query = Db::connection($provider);
+        $user = $query->table('users')->find($id);
         unset($user->password);
-
         return $user;
     }
 }
