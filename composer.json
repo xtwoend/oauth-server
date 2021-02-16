@@ -20,6 +20,9 @@
             "OAuthServer\\": "src/"
         }
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "hyperf": {
             "config": "OAuthServer\\ConfigProvider"
