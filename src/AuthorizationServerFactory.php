@@ -20,7 +20,7 @@ class AuthorizationServerFactory
     protected $container;
     protected $config;
 
-    public function __construct(ContainerInterface $container) 
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
         $this->config    = $container->get(ConfigInterface::class);
@@ -29,7 +29,6 @@ class AuthorizationServerFactory
     public function __invoke()
     {
         return tap($this->makeAuthorizationServer(), function ($server) {
-            
             $scope = $this->config->get('oauth.scopes', []);
             $scope = implode(' ', array_keys($scope));
             $server->setDefaultScope($scope);
@@ -42,15 +41,18 @@ class AuthorizationServerFactory
             );
 
             $server->enableGrantType(
-                $this->makeAuthCodeGrant(), $tokenExpiresIn
+                $this->makeAuthCodeGrant(),
+                $tokenExpiresIn
             );
 
             $server->enableGrantType(
-                $this->makeRefreshTokenGrant(), $tokenExpiresIn
+                $this->makeRefreshTokenGrant(),
+                $tokenExpiresIn
             );
 
             $server->enableGrantType(
-                $this->makePasswordGrant(), $tokenExpiresIn
+                $this->makePasswordGrant(),
+                $tokenExpiresIn
             );
             
             return $server;
@@ -96,7 +98,7 @@ class AuthorizationServerFactory
         $userRepository = make(UserRepository::class);
         $refreshTokenRepository = make(RefreshTokenRepository::class);
 
-        return tap(new PasswordGrant($userRepository, $refreshTokenRepository), function ($grant){
+        return tap(new PasswordGrant($userRepository, $refreshTokenRepository), function ($grant) {
             $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
         });
     }

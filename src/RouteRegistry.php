@@ -20,8 +20,8 @@ class RouteRegistry
     protected $tokens;
 
     public function __construct(
-        ContainerInterface $container, 
-        AuthorizationServer $server, 
+        ContainerInterface $container,
+        AuthorizationServer $server,
         TokenRepository $tokens
     ) {
         $this->container = $container;
@@ -33,10 +33,12 @@ class RouteRegistry
     {
         $this->router = $app->router;
         
-        $this->router->post('/oauth/token', 
-            function(RequestInterface $request, ResponseInterface $response){
+        $this->router->post(
+            '/oauth/token',
+            function (RequestInterface $request, ResponseInterface $response) {
                 return $this->issueToken($request, $response);
-        });
+            }
+        );
     }
 
     public function issueToken(RequestInterface $request, ResponseInterface $response)

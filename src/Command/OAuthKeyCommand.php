@@ -50,7 +50,6 @@ class OAuthKeyCommand extends Command
         if ((file_exists($publicKey) || file_exists($privateKey)) && ! $force) {
             $this->error('Encryption keys already exist. Use the --force option to overwrite them.');
         } else {
-            
             $private    = RSA::createKey($this->input ? (int) $length : 4096);
             $public     = $private->getPublicKey();
             

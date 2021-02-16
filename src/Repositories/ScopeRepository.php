@@ -18,7 +18,7 @@ class ScopeRepository implements ScopeRepositoryInterface
 {
     protected $config;
 
-    public function __construct(ConfigInterface $config) 
+    public function __construct(ConfigInterface $config)
     {
         $this->config = $config;
     }
@@ -28,7 +28,7 @@ class ScopeRepository implements ScopeRepositoryInterface
      */
     public function getScopeEntityByIdentifier($scopeIdentifier)
     {
-        if(! $this->hasScope($scopeIdentifier)){
+        if (! $this->hasScope($scopeIdentifier)) {
             return;
         }
 
@@ -47,7 +47,6 @@ class ScopeRepository implements ScopeRepositoryInterface
         ClientEntityInterface $clientEntity,
         $userIdentifier = null
     ) {
-        
         if (! in_array($grantType, ['password', 'personal_access', 'client_credentials'])) {
             $scopes = collect($scopes)->reject(function ($scope) {
                 return trim($scope->getIdentifier()) === '*';

@@ -12,7 +12,7 @@ class ResourceServerFactory
     protected $container;
     protected $config;
 
-    public function __construct(ContainerInterface $container) 
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
         $this->config    = $container->get(ConfigInterface::class);

@@ -19,5 +19,10 @@
         "psr-4": {
             "OAuthServer\\": "src/"
         }
+    },
+    "extra": {
+        "hyperf": {
+            "config": "OAuthServer\\ConfigProvider"
+        }
     }
 }

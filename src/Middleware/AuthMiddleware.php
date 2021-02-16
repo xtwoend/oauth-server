@@ -30,12 +30,12 @@ class AuthMiddleware implements MiddlewareInterface
     }
 
     public function process(Request $request, Handler $handler): ResponseInterface
-    {   
+    {
         try {
             $request = $this->server->validateAuthenticatedRequest($request);
         } catch (OAuthServerException $exception) {
             throw new AuthenticationException("Unauthorize: {$exception->getMessage()}");
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             throw new AuthenticationException("Unauthorize: {$exception->getMessage()}");
         }
 
@@ -55,14 +55,16 @@ class AuthMiddleware implements MiddlewareInterface
     {
         $client = $this->repository->findActive($request->getAttribute('oauth_client_id'));
 
-        if(is_null($client))
+        if (is_null($client)) {
             throw new AuthenticationException("Unauthorize.");
+        }
 
         $userId = $request->getAttribute('oauth_user_id');
         $user = $this->userRepository->getUserByProviderUserId($userId, $client);
   
-        if(is_null($user))
+        if (is_null($user)) {
             throw new AuthenticationException("Unauthorize.");
+        }
 
         $this->client   = $client;
         $this->user     = $user;

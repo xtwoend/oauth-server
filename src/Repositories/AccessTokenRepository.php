@@ -20,14 +20,14 @@ use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 
 class AccessTokenRepository implements AccessTokenRepositoryInterface
-{   
+{
     use FormatsScopesForStorage;
     
     protected $events;
 
-    public function __construct(EventDispatcherInterface $events) 
+    public function __construct(EventDispatcherInterface $events)
     {
-        $this->events = $events;   
+        $this->events = $events;
     }
     
     /**
@@ -99,8 +99,9 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
             ->where('id', $tokenId)
             ->first();
         
-        if(! $token)
+        if (! $token) {
             return [null, null];
+        }
 
         $client = Db::connection(config('oauth.provider', 'default'))
             ->table('oauth_clients')

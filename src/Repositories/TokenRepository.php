@@ -11,5 +11,4 @@ namespace OAuthServer\Repositories;
 
 class TokenRepository
 {
-    
 }

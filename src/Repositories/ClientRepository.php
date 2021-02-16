@@ -70,7 +70,7 @@ class ClientRepository implements ClientRepositoryInterface
 
     protected function verifySecret($clientSecret, $storedHash)
     {
-        return (false) 
+        return (false)
                 ? password_verify($clientSecret, $storedHash)
                 : hash_equals($storedHash, $clientSecret);
     }

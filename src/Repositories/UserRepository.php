@@ -33,31 +33,27 @@ class UserRepository implements UserRepositoryInterface
         }
         
         $query = Db::connection($provider);
-        
+
         $user = $query->table('users')->where(config('oauth.find_by', 'email'), $username)->first();
 
         if (! $user) {
             return;
         }
 
-        if(!password_verify($password, $user->password)){
+        if (!password_verify($password, $user->password)) {
             return;
         }
 
         return new UserEntity($user->id);
     }
 
-    public function getUserById($id)
-    {
-        # code...
-    }
-
     public function getUserByProviderUserId($id, $client)
     {
         $provider = $client->provider;
        
-        if(is_null($provider))
+        if (is_null($provider)) {
             $provider = config('oauth.provider');
+        }
 
         $query = Db::connection($provider);
         $user = $query->table('users')->find($id);

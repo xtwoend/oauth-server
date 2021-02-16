@@ -20,9 +20,9 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 {
     protected $events;
 
-    public function __construct(EventDispatcherInterface $events) 
+    public function __construct(EventDispatcherInterface $events)
     {
-        $this->events = $events;   
+        $this->events = $events;
     }
 
     /**

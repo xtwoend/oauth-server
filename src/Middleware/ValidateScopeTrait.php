@@ -5,9 +5,8 @@ namespace OAuthServer\Middleware;
 use OAuthServer\Exception\MissingScopeException;
 use OAuthServer\Exception\AuthenticationException;
 
-
 /**
- * 
+ *
  */
 trait ValidateScopeTrait
 {
