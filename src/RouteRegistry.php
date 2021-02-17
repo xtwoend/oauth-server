@@ -2,7 +2,7 @@
 
 namespace OAuthServer;
 
-use App\Application;
+use Mix\Application;
 use Psr\Container\ContainerInterface;
 use League\OAuth2\Server\AuthorizationServer;
 use OAuthServer\Repositories\TokenRepository;
