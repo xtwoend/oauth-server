@@ -41,15 +41,21 @@ class OAuthKeyCommand extends Command
     {
         $force = $this->input->getOption('force');
         $length = $this->input->getOption('length');
+        $path = BASE_PATH . DIRECTORY_SEPARATOR . 'var';
 
         [$publicKey, $privateKey] = [
-            BASE_PATH . '/var/oauth-public.key',
-            BASE_PATH . '/var/oauth-private.key',
+            $path . DIRECTORY_SEPARATOR . 'oauth-public.key',
+            $path . DIRECTORY_SEPARATOR . 'oauth-private.key',
         ];
         
         if ((file_exists($publicKey) || file_exists($privateKey)) && ! $force) {
             $this->error('Encryption keys already exist. Use the --force option to overwrite them.');
         } else {
+
+            if (!is_dir($path)) {
+                mkdir($path, 0755, true);
+            }
+
             $private    = RSA::createKey($this->input ? (int) $length : 4096);
             $public     = $private->getPublicKey();
             
