@@ -16,7 +16,7 @@ class ConfigProvider
             'dependencies' => [
                 AuthorizationServer::class => AuthorizationServerFactory::class,
                 ResourceServer::class => ResourceServerFactory::class,
-                
+
                 // make repository oauth
                 AccessTokenRepository::class => AccessTokenRepository::class,
                 AuthCodeRepository::class => AuthCodeRepository::class,

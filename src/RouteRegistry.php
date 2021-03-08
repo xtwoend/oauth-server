@@ -32,7 +32,7 @@ class RouteRegistry
     public function bind(Application $app)
     {
         $this->router = $app->router;
-        
+
         $this->router->post(
             '/oauth/token',
             function (RequestInterface $request, ResponseInterface $response) {

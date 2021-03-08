@@ -22,14 +22,14 @@ use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 class AccessTokenRepository implements AccessTokenRepositoryInterface
 {
     use FormatsScopesForStorage;
-    
+
     protected $events;
 
     public function __construct(EventDispatcherInterface $events)
     {
         $this->events = $events;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -41,8 +41,8 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
             'client_id' => $accessTokenEntity->getClient()->getIdentifier(),
             'scopes' => $this->formatScopesForStorage($accessTokenEntity->getScopes()),
             'revoked' => false,
-            'created_at' => new DateTime,
-            'updated_at' => new DateTime,
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
             'expires_at' => $accessTokenEntity->getExpiryDateTime(),
         ]);
 
@@ -98,7 +98,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
             ->where('revoked', 0)
             ->where('id', $tokenId)
             ->first();
-        
+
         if (! $token) {
             return [null, null];
         }
@@ -107,7 +107,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
             ->table('oauth_clients')
             ->where('id', $token->client_id)
             ->first();
-        
+
         unset($client->secret);
 
         return [$token, $client];

@@ -42,7 +42,7 @@ class ClientRepository implements ClientRepositoryInterface
     public function validateClient($clientIdentifier, $clientSecret, $grantType)
     {
         $record = $this->findActive($clientIdentifier);
-        
+
         if (! $record || ! $this->handlesGrant($record, $grantType)) {
             return false;
         }
@@ -74,7 +74,7 @@ class ClientRepository implements ClientRepositoryInterface
                 ? password_verify($clientSecret, $storedHash)
                 : hash_equals($storedHash, $clientSecret);
     }
-    
+
     public function findActive($clientIdentifier)
     {
         return Db::connection(config('oauth.provider', 'default'))->table('oauth_clients')

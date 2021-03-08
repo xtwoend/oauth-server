@@ -15,8 +15,9 @@ use League\OAuth2\Server\Entities\Traits\EntityTrait;
 
 class ClientEntity implements ClientEntityInterface
 {
-    use EntityTrait, ClientTrait;
-    
+    use EntityTrait;
+    use ClientTrait;
+
     /**
      * The client identifier.
      *
@@ -30,7 +31,7 @@ class ClientEntity implements ClientEntityInterface
      * @var string
      */
     public $provider;
-    
+
     /**
      * Undocumented variable
      *

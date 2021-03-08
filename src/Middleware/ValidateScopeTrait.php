@@ -24,7 +24,7 @@ trait ValidateScopeTrait
         if (in_array('*', $tokenScopes, true)) {
             return;
         }
-        
+
         foreach ($scopes as $scope) {
             if (! $this->can($tokenScopes, $scope)) {
                 throw new MissingScopeException($scope);

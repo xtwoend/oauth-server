@@ -15,13 +15,13 @@ use Psr\Http\Server\RequestHandlerInterface as Handler;
 class AuthMiddleware implements MiddlewareInterface
 {
     use ValidateScopeTrait;
-    
+
     protected $userRepository;
     protected $repository;
     protected $server;
     protected $client;
     protected $user;
-    
+
     public function __construct(UserRepository $userRepository, ClientRepository $repository, ResourceServer $server)
     {
         $this->userRepository = $userRepository;
@@ -61,7 +61,7 @@ class AuthMiddleware implements MiddlewareInterface
 
         $userId = $request->getAttribute('oauth_user_id');
         $user = $this->userRepository->getUserByProviderUserId($userId, $client);
-  
+
         if (is_null($user)) {
             throw new AuthenticationException("Unauthorize.");
         }

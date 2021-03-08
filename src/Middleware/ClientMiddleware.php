@@ -7,13 +7,15 @@ use League\OAuth2\Server\ResourceServer;
 use Psr\Http\Server\MiddlewareInterface;
 use OAuthServer\Middleware\ValidateScopeTrait;
 use OAuthServer\Repositories\ClientRepository;
+use OAuthServer\Exception\AuthenticationException;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as Handler;
+use League\OAuth2\Server\Exception\OAuthServerException;
 
 class ClientMiddleware implements MiddlewareInterface
 {
     use ValidateScopeTrait;
-    
+
     protected $repository;
     protected $server;
     protected $client;

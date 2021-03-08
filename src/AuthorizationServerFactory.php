@@ -61,7 +61,7 @@ class AuthorizationServerFactory
                 $this->makeOtpGrant(),
                 $tokenExpiresIn
             );
-            
+
             return $server;
         });
     }
