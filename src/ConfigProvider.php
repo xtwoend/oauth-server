@@ -26,6 +26,9 @@ class ConfigProvider
                 ScopeRepository::class => ScopeRepository::class,
                 UserRepository::class => UserRepository::class,
                 TokenRepository::class => TokenRepository::class,
+
+                // Token By User
+                Token::class => Token::class
             ],
             'listeners' => [
                 //

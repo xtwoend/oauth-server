@@ -3,6 +3,7 @@
 namespace OAuthServer;
 
 use OAuthServer\Grant\OtpGrant;
+use OAuthServer\Grant\UserGrant;
 use Hyperf\Contract\ConfigInterface;
 use Psr\Container\ContainerInterface;
 use OAuthServer\OneTimePasswordInterface;
@@ -62,6 +63,11 @@ class AuthorizationServerFactory
                 $tokenExpiresIn
             );
 
+            $server->enableGrantType(
+                $this->makeUserGrant(),
+                $tokenExpiresIn
+            );
+
             return $server;
         });
     }
@@ -117,6 +123,16 @@ class AuthorizationServerFactory
         $oneTimePassword = make(OneTimePasswordInterface::class);
 
         return tap(new OtpGrant($userRepository, $refreshTokenRepository, $oneTimePassword), function ($grant) {
+            $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+        });
+    }
+
+    public function makeUserGrant()
+    {
+        $userRepository = make(UserRepository::class);
+        $refreshTokenRepository = make(RefreshTokenRepository::class);
+
+        return tap(new UserGrant($userRepository, $refreshTokenRepository), function ($grant) {
             $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
         });
     }

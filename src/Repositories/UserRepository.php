@@ -90,7 +90,9 @@ class UserRepository implements UserRepositoryInterface
 
         $query = Db::connection($provider);
         $user = $query->table('users')->find($id);
+        
         unset($user->password);
-        return $user;
+
+        return new UserEntity($user->id);
     }
 }
