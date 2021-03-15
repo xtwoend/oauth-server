@@ -7,6 +7,7 @@ use OAuthServer\Command\OAuthKeyCommand;
 use OAuthServer\AuthorizationServerFactory;
 use League\OAuth2\Server\AuthorizationServer;
 use OAuthServer\Repositories\TokenRepository;
+use OAuthServer\Command\PurgeTokenCommand;
 
 class ConfigProvider
 {
@@ -30,7 +31,8 @@ class ConfigProvider
                 //
             ],
             'commands' => [
-                OAuthKeyCommand::class
+                OAuthKeyCommand::class,
+                PurgeTokenCommand::class
             ],
             'annotations' => [
                 'scan' => [
