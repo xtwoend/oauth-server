@@ -7,5 +7,6 @@ return [
         'public' => 'read all public resource'
     ],
     'provider' => 'default', // connection provider
+    'user_table' => 'users', // user table 
     'find_by' => 'email' // username check
 ];
