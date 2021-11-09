@@ -9,3 +9,4 @@
 
     php bin/hyperf.php vendor:publish xtwoend/oauth-server
 ```
+
