@@ -53,7 +53,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function isRefreshTokenRevoked($tokenId)
     {
-        if ($token = Db::connection(config('oauth.provider', 'default'))->table('oauth_refresh_tokens')->where('id', $tokenId)) {
+        if ($token = Db::connection(config('oauth.provider', 'default'))->table('oauth_refresh_tokens')->where('id', $tokenId)->first()) {
             return $token->revoked;
         }
 
