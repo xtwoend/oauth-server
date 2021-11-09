@@ -6,6 +6,7 @@ return [
     'scopes' => [
         'public' => 'read all public resource'
     ],
+    'use_otp_grant' => false,
     'provider' => 'default', // connection provider
     'user_table' => 'users', // user table 
     'find_by' => 'email' // username check
