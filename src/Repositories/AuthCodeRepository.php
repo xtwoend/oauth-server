@@ -25,7 +25,7 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
             'user_id' => $authCodeEntity->getUserIdentifier(),
             'client_id' => $authCodeEntity->getClient()->getIdentifier(),
             'scopes' => $this->formatScopesForStorage($authCodeEntity->getScopes()),
-            'revoked' => false,
+            'revoked' => 0,
             'expires_at' => $authCodeEntity->getExpiryDateTime(),
         ];
 
@@ -37,7 +37,7 @@ class AuthCodeRepository implements AuthCodeRepositoryInterface
      */
     public function revokeAuthCode($codeId)
     {
-        Db::connection(config('oauth.provider', 'default'))->table('oauth_auth_codes')->where('id', $codeId)->update(['revoked' => true]);
+        Db::connection(config('oauth.provider', 'default'))->table('oauth_auth_codes')->where('id', $codeId)->update(['revoked' => 1]);
     }
 
     /**
