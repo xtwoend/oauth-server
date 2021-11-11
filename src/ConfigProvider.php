@@ -57,8 +57,8 @@ class ConfigProvider
                 [
                     'id' => 'migration',
                     'description' => 'The migration for oauth.',
-                    'source' => __DIR__ . '/../migrations',
-                    'destination' => BASE_PATH . '/migrations',
+                    'source' => __DIR__ . '/../migrations/*',
+                    'destination' => BASE_PATH . '/migrations/*',
                 ],
             ],
         ];
