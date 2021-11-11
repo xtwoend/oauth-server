@@ -58,10 +58,12 @@ class AuthorizationServerFactory
                 $tokenExpiresIn
             );
 
-            $server->enableGrantType(
-                $this->makeOtpGrant(),
-                $tokenExpiresIn
-            );
+            if($this->config->get('oauth.use_otp_grant', false)) {
+                $server->enableGrantType(
+                    $this->makeOtpGrant(),
+                    $tokenExpiresIn
+                );
+            }
 
             $server->enableGrantType(
                 $this->makeUserGrant(),

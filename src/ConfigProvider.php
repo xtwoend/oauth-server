@@ -52,7 +52,7 @@ class ConfigProvider
                     'id' => 'config',
                     'description' => 'The config for oauth.',
                     'source' => __DIR__ . '/../publish/oauth.php',
-                    'destination' => BASE_PATH . '/config/oauth.php',
+                    'destination' => BASE_PATH . '/config/autoload/oauth.php',
                 ],
                 [
                     'id' => 'migration',

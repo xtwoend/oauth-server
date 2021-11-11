@@ -40,7 +40,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
             'user_id' => $accessTokenEntity->getUserIdentifier(),
             'client_id' => $accessTokenEntity->getClient()->getIdentifier(),
             'scopes' => $this->formatScopesForStorage($accessTokenEntity->getScopes()),
-            'revoked' => false,
+            'revoked' => 0,
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
             'expires_at' => $accessTokenEntity->getExpiryDateTime(),
@@ -58,7 +58,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
      */
     public function revokeAccessToken($tokenId)
     {
-        Db::connection(config('oauth.provider', 'default'))->table('oauth_access_tokens')->where('id', $tokenId)->update(['revoked' => true]);
+        Db::connection(config('oauth.provider', 'default'))->table('oauth_access_tokens')->where('id', $tokenId)->update(['revoked' => 1]);
     }
 
     /**

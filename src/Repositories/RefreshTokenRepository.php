@@ -33,7 +33,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
         Db::connection(config('oauth.provider', 'default'))->table('oauth_refresh_tokens')->insert([
             'id' => $id = $refreshTokenEntity->getIdentifier(),
             'access_token_id' => $accessTokenId = $refreshTokenEntity->getAccessToken()->getIdentifier(),
-            'revoked' => false,
+            'revoked' => 0,
             'expires_at' => $refreshTokenEntity->getExpiryDateTime(),
         ]);
 
@@ -45,7 +45,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function revokeRefreshToken($tokenId)
     {
-        Db::connection(config('oauth.provider', 'default'))->table('oauth_refresh_tokens')->where('id', $tokenId)->update(['revoked' => true]);
+        Db::connection(config('oauth.provider', 'default'))->table('oauth_refresh_tokens')->where('id', $tokenId)->update(['revoked' => 1]);
     }
 
     /**
@@ -53,8 +53,8 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function isRefreshTokenRevoked($tokenId)
     {
-        if ($token = Db::connection(config('oauth.provider', 'default'))->table('oauth_refresh_tokens')->where('id', $tokenId)) {
-            return $token->revoked;
+        if ($token = Db::connection(config('oauth.provider', 'default'))->table('oauth_refresh_tokens')->where('id', $tokenId)->first()) {
+            return (bool) $token->revoked;
         }
 
         return true;

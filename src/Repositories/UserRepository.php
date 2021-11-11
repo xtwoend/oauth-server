@@ -35,7 +35,7 @@ class UserRepository implements UserRepositoryInterface
 
         $query = Db::connection($provider);
 
-        $user = $query->table('users')->where(config('oauth.find_by', 'email'), $username)->first();
+        $user = $query->table(config('oauth.user_table', 'users'))->where(config('oauth.find_by', 'email'), $username)->first();
 
         if (! $user) {
             return;
@@ -67,7 +67,7 @@ class UserRepository implements UserRepositoryInterface
 
         $query = Db::connection($provider);
 
-        $user = $query->table('users')->where('phone', $phone)->first();
+        $user = $query->table(config('oauth.user_table', 'users'))->where('phone', $phone)->first();
 
         if (! $user) {
             return;
@@ -89,7 +89,7 @@ class UserRepository implements UserRepositoryInterface
         }
 
         $query = Db::connection($provider);
-        $user = $query->table('users')->find($id);
+        $user = $query->table(config('oauth.user_table', 'users'))->find($id);
         
         unset($user->password);
 
