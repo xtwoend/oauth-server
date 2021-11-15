@@ -53,12 +53,8 @@ class ClientMiddleware implements MiddlewareInterface
         if (is_null($client)) {
             throw new AuthenticationException("Unauthorize.");
         }
-        
-        if($client->password_client) {
-            throw new AuthenticationException("Unauthorize.");
-        }
 
-        $this->client   = $client;
+        $this->client = $client;
 
         $tokenScope = $request->getAttribute('oauth_scopes')?? [];
 
