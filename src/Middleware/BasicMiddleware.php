@@ -12,7 +12,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as Handler;
 use League\OAuth2\Server\Exception\OAuthServerException;
 
-class ClientMiddleware implements MiddlewareInterface
+class BasicMiddleware implements MiddlewareInterface
 {
     use ValidateScopeTrait;
 
