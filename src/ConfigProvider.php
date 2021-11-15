@@ -57,8 +57,32 @@ class ConfigProvider
                 [
                     'id' => 'migration',
                     'description' => 'The migration for oauth.',
-                    'source' => __DIR__ . '/../migrations',
-                    'destination' => BASE_PATH . '/migrations',
+                    'source' => __DIR__ . '/../migrations/2020_12_21_152534_create_oauth_auth_codes_table.php',
+                    'destination' => BASE_PATH . '/migrations/2020_12_21_152534_create_oauth_auth_codes_table.php',
+                ],
+                [
+                    'id' => 'migration',
+                    'description' => 'The migration for oauth.',
+                    'source' => __DIR__ . '/../migrations/2020_12_21_152546_create_oauth_access_tokens_table.php',
+                    'destination' => BASE_PATH . '/migrations/2020_12_21_152546_create_oauth_access_tokens_table.php',
+                ],
+                [
+                    'id' => 'migration',
+                    'description' => 'The migration for oauth.',
+                    'source' => __DIR__ . '/../migrations/2020_12_21_152554_create_oauth_refresh_tokens_table.php',
+                    'destination' => BASE_PATH . '/migrations/2020_12_21_152554_create_oauth_refresh_tokens_table.php',
+                ],
+                [
+                    'id' => 'migration',
+                    'description' => 'The migration for oauth.',
+                    'source' => __DIR__ . '/../migrations/2020_12_21_152604_create_oauth_clients_table.php',
+                    'destination' => BASE_PATH . '/migrations/2020_12_21_152604_create_oauth_clients_table.php',
+                ],
+                [
+                    'id' => 'migration',
+                    'description' => 'The migration for oauth.',
+                    'source' => __DIR__ . '/../migrations/2020_12_21_152612_create_oauth_personal_access_clients_table.php',
+                    'destination' => BASE_PATH . '/migrations/2020_12_21_152612_create_oauth_personal_access_clients_table.php',
                 ],
             ],
         ];
