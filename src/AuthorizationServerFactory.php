@@ -33,9 +33,9 @@ class AuthorizationServerFactory
         $this->container = $container;
         $this->config    = $container->get(ConfigInterface::class);
 
-        $this->tokensExpireIn = $this->dateToInterval($this->config('oauth.expire_in.token'));
-        $this->refreshTokensExpireIn = $this->dateToInterval($this->config('oauth.expire_in.refresh_token'));
-        $this->personalAccessTokensExpireIn = $this->dateToInterval($this->config('oauth.expire_in.personal_token'));
+        $this->tokensExpireIn = $this->dateToInterval($this->config->get('oauth.expire_in.token'));
+        $this->refreshTokensExpireIn = $this->dateToInterval($this->config->get('oauth.expire_in.refresh_token'));
+        $this->personalAccessTokensExpireIn = $this->dateToInterval($this->config->get('oauth.expire_in.personal_token'));
     }
 
     private function dateToInterval(DateTimeInterface $date = null): DateInterval
