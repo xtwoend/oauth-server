@@ -2,6 +2,8 @@
 
 namespace OAuthServer;
 
+use DateInterval;
+use DateTimeInterface;
 use OAuthServer\Grant\OtpGrant;
 use OAuthServer\Grant\UserGrant;
 use Hyperf\Contract\ConfigInterface;
@@ -22,11 +24,27 @@ class AuthorizationServerFactory
 {
     protected $container;
     protected $config;
+    protected $tokensExpireIn;
+    protected $refreshTokensExpireIn;
+    protected $personalAccessTokensExpireIn;
 
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
         $this->config    = $container->get(ConfigInterface::class);
+
+        $this->tokensExpireIn = $this->dateToInterval($this->config('oauth.expire_in.token'));
+        $this->refreshTokensExpireIn = $this->dateToInterval($this->config('oauth.expire_in.refresh_token'));
+        $this->personalAccessTokensExpireIn = $this->dateToInterval($this->config('oauth.expire_in.personal_token'));
+    }
+
+    private function dateToInterval(DateTimeInterface $date = null): DateInterval
+    {
+        if(is_null($date)) {
+            return new DateInterval('P1Y');
+        }
+
+        return Carbon::now()->diff($date);
     }
 
     public function __invoke()
@@ -36,7 +54,7 @@ class AuthorizationServerFactory
             $scope = implode(' ', array_keys($scope));
             $server->setDefaultScope($scope);
 
-            $tokenExpiresIn = new \DateInterval('PT1H');
+            $tokenExpiresIn = $this->tokensExpireIn;
 
             $server->enableGrantType(
                 new \League\OAuth2\Server\Grant\ClientCredentialsGrant(),
@@ -95,7 +113,7 @@ class AuthorizationServerFactory
         return new AuthCodeGrant(
             make(AuthCodeRepository::class),
             make(RefreshTokenRepository::class),
-            new \DateInterval('PT10M')
+            $this->personalAccessTokensExpireIn
         );
     }
 
@@ -104,7 +122,7 @@ class AuthorizationServerFactory
         $repository = make(RefreshTokenRepository::class);
 
         return tap(new RefreshTokenGrant($repository), function ($grant) {
-            $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+            $grant->setRefreshTokenTTL($this->refreshTokensExpireIn);
         });
     }
 
@@ -114,7 +132,7 @@ class AuthorizationServerFactory
         $refreshTokenRepository = make(RefreshTokenRepository::class);
 
         return tap(new PasswordGrant($userRepository, $refreshTokenRepository), function ($grant) {
-            $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+            $grant->setRefreshTokenTTL($this->tokensExpireIn);
         });
     }
 
@@ -125,7 +143,7 @@ class AuthorizationServerFactory
         $oneTimePassword = make(OneTimePasswordInterface::class);
 
         return tap(new OtpGrant($userRepository, $refreshTokenRepository, $oneTimePassword), function ($grant) {
-            $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+            $grant->setRefreshTokenTTL($this->tokensExpireIn);
         });
     }
 
@@ -135,7 +153,7 @@ class AuthorizationServerFactory
         $refreshTokenRepository = make(RefreshTokenRepository::class);
 
         return tap(new UserGrant($userRepository, $refreshTokenRepository), function ($grant) {
-            $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+            $grant->setRefreshTokenTTL($this->tokensExpireIn);
         });
     }
 }
