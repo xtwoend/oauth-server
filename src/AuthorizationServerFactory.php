@@ -3,6 +3,7 @@
 namespace OAuthServer;
 
 use DateInterval;
+use Carbon\Carbon;
 use DateTimeInterface;
 use OAuthServer\Grant\OtpGrant;
 use OAuthServer\Grant\UserGrant;
