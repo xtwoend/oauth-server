@@ -39,6 +39,19 @@ class Token
         return $this->issueToken($request, $this->response);
     }
 
+    public function refreshToken($refreshToken, $client, array $scopes = [])
+    {
+        $request = $this->request->withParsedBody([
+            'grant_type'    => 'refresh_token',
+            'client_id'     => $client->id,
+            'client_secret' => $client->secret,
+            'refresh_token' => $refreshToken,
+            'scope'         => implode(' ', $scopes)
+        ]);
+        
+        return $this->issueToken($request, $this->response);
+    }
+
     public function issueToken(ServerRequestInterface $request, ResponseInterface $response)
     {
         try {
