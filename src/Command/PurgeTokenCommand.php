@@ -70,13 +70,13 @@ class PurgeTokenCommand extends Command
 
         $token = Db::connection(config('oauth.provider', 'default'))
             ->table('oauth_access_tokens')
-            ->where('expires_at', '<=', $now)
+            // ->where('expires_at', '<=', $now)
             ->orWhere('revoked', 1)
             ->delete();
 
         $refresh = Db::connection(config('oauth.provider', 'default'))
             ->table('oauth_refresh_tokens')
-            ->where('expires_at', '<=', $now)
+            // ->where('expires_at', '<=', $now)
             ->orWhere('revoked', 1)
             ->delete();
     }
