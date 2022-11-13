@@ -66,7 +66,7 @@ class PurgeTokenCommand extends Command
      */
     private function clear()
     {
-        $now = Carbon::now()->format('Y-m-d H:i:s');
+        $now = Carbon::now()->subHours(7)->format('Y-m-d H:i:s');
 
         $token = Db::connection(config('oauth.provider', 'default'))
             ->table('oauth_access_tokens')
