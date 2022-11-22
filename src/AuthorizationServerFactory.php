@@ -39,38 +39,36 @@ class AuthorizationServerFactory
             $scope = implode(' ', array_keys($scope));
             $server->setDefaultScope($scope);
 
-            $tokenExpiresIn = new DateInterval($this->config->get('oauth.expire_in.token'));
-
             $server->enableGrantType(
                 new \League\OAuth2\Server\Grant\ClientCredentialsGrant(),
-                $tokenExpiresIn
+                new DateInterval($this->config->get('oauth.expire_in.personal_token'))
             );
 
             $server->enableGrantType(
                 $this->makeAuthCodeGrant(),
-                $tokenExpiresIn
+                new DateInterval($this->config->get('oauth.expire_in.personal_token'))
             );
 
             $server->enableGrantType(
                 $this->makeRefreshTokenGrant(),
-                $tokenExpiresIn
+                new DateInterval($this->config->get('oauth.expire_in.refresh_token'))
             );
 
             $server->enableGrantType(
                 $this->makePasswordGrant(),
-                $tokenExpiresIn
+                new DateInterval($this->config->get('oauth.expire_in.token'))
             );
 
             if($this->config->get('oauth.use_otp_grant', false)) {
                 $server->enableGrantType(
                     $this->makeOtpGrant(),
-                    $tokenExpiresIn
+                    new DateInterval($this->config->get('oauth.expire_in.token'))
                 );
             }
 
             $server->enableGrantType(
                 $this->makeUserGrant(),
-                $tokenExpiresIn
+                new DateInterval($this->config->get('oauth.expire_in.token'))
             );
 
             return $server;
