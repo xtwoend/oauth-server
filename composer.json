@@ -2,7 +2,7 @@
     "name": "xtwoend/oauth-server",
     "description": "OAuth2 Server for Hyperf Framework",
     "license": "MIT",
-    "version": "1.0.1",
+    "version": "1.1.1",
     "authors": [
         {
             "name": "Abdul Hafidz Anshari",
