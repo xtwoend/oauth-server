@@ -2,7 +2,7 @@
     "name": "xtwoend/oauth-server",
     "description": "OAuth2 Server for Hyperf Framework",
     "license": "MIT",
-    "version": "1.1.1",
+    "version": "1.3.0",
     "authors": [
         {
             "name": "Abdul Hafidz Anshari",
@@ -11,8 +11,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "hyperf/database": "^2.2|^3.0",
-        "hyperf/db-connection": "^2.2|^3.0",
+        "hyperf/database": "^3.0",
+        "hyperf/db-connection": "^3.0",
         "league/oauth2-server": "^8.2",
         "nesbot/carbon": "^2.0",
         "phpseclib/phpseclib": "^3.0"
@@ -27,7 +27,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.2-dev"
+            "dev-master": "1.3-dev"
         },
         "hyperf": {
             "config": "OAuthServer\\ConfigProvider"

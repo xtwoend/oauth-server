@@ -17,7 +17,7 @@ class OAuthKeyCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'oauth:key {--force : Overwrite keys they already exist}
+    protected ?string $signature = 'oauth:key {--force : Overwrite keys they already exist}
                                       {--length=4096 : The length of the private key}';
     /**
      * @var ContainerInterface

@@ -16,7 +16,7 @@ class PurgeTokenCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'oauth:purge {--force : purge all expires token}';
+    protected ?string $signature = 'oauth:purge {--force : purge all expires token}';
 
     /**
      * @var ContainerInterface
